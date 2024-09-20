@@ -1,0 +1,30 @@
+<div class="youtube-search-container">
+  <form [formGroup]="searchForm" (ngSubmit)="onSearch()" class="search-form">
+    <input 
+      formControlName="query" 
+      placeholder="Search YouTube" 
+      class="search-input"
+      type="text"
+    />
+    <button 
+      type="submit" 
+      [disabled]="searchForm.invalid" 
+      class="search-button">
+      Search
+    </button>
+  </form>
+
+  <div *ngIf="results.length > 0" class="results-container">
+    <h3>Search Results:</h3>
+    <ul class="results-list">
+      <li *ngFor="let result of results" class="result-item">
+        <a [href]="result.url" target="_blank">
+          <img [src]="result.thumbnailUrl" alt="Thumbnail" class="thumbnail" />
+          <div class="video-info">
+            <h4>{{ result.title }}</h4>
+          </div>
+        </a>
+      </li>
+    </ul>
+  </div>
+</div>

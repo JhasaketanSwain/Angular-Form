@@ -1,0 +1,185 @@
+<form [formGroup]="loginForm" (ngSubmit)="login()" *ngIf="showLoginForm">
+  <div>
+    <input type="email" formControlName="email" placeholder="Email" />
+    <div
+      *ngIf="
+        loginForm.controls['email'].invalid &&
+        loginForm.controls['email'].touched
+      "
+    >
+      <small *ngIf="loginForm.controls['email'].errors?.['required']"
+        >Email is required.</small
+      >
+      <small *ngIf="loginForm.controls['email'].errors?.['email']"
+        >Please enter a valid email address.</small
+      >
+      <small *ngIf="loginForm.controls['email'].errors?.['maxlength']"
+        >Email cannot be more than 100 characters.</small
+      >
+    </div>
+  </div>
+
+  <div>
+    <input type="password" formControlName="password" placeholder="Password" />
+    <div
+      *ngIf="
+        loginForm.controls['password'].invalid &&
+        loginForm.controls['password'].touched
+      "
+    >
+      <small *ngIf="loginForm.controls['password'].errors?.['required']"
+        >Password is required.</small
+      >
+      <small *ngIf="loginForm.controls['password'].errors?.['minlength']"
+        >Password must be at least 8 characters long.</small
+      >
+      <small *ngIf="loginForm.controls['password'].errors?.['maxlength']"
+        >Password cannot be more than 30 characters.</small
+      >
+    </div>
+  </div>
+
+  <button type="submit" [disabled]="loginForm.invalid" (click)="onLoginClick()">
+    Login
+  </button>
+  <button type="button" (click)="signupClick()">Signup</button>
+  <a (click)="openForgotPassword()">Forgot Password?</a>
+</form>
+
+
+
+
+
+<form [formGroup]="signupForm" (ngSubmit)="signup()" *ngIf="showSignForm">
+  <div>
+    <input type="text" formControlName="name" placeholder="Name" />
+    <div
+      *ngIf="signupForm.get('name')?.touched && signupForm.get('name')?.invalid"
+    >
+      <small *ngIf="signupForm.get('name')?.hasError('required')"
+        >Name is required</small
+      >
+      <small *ngIf="signupForm.get('name')?.hasError('maxlength')"
+        >Name cannot be more than 100 characters</small
+      >
+    </div>
+  </div>
+
+  <div>
+    <input type="email" formControlName="email" placeholder="Email" />
+    <div
+      *ngIf="
+        signupForm.get('email')?.touched && signupForm.get('email')?.invalid
+      "
+    >
+      <small *ngIf="signupForm.get('email')?.hasError('required')"
+        >Email is required</small
+      >
+      <small *ngIf="signupForm.get('email')?.hasError('email')"
+        >Enter a valid email</small
+      >
+    </div>
+  </div>
+
+  <div>
+    <input type="text" formControlName="mobile" placeholder="Mobile" />
+    <div
+      *ngIf="
+        signupForm.get('mobile')?.touched && signupForm.get('mobile')?.invalid
+      "
+    >
+      <small *ngIf="signupForm.get('mobile')?.hasError('pattern')"
+        >Mobile number can contain only numbers</small
+      >
+    </div>
+  </div>
+
+  <div>
+    <input type="password" formControlName="password" placeholder="Password" />
+    <div
+      *ngIf="
+        signupForm.get('password')?.touched &&
+        signupForm.get('password')?.invalid
+      "
+    >
+      <small *ngIf="signupForm.get('password')?.hasError('required')"
+        >Password is required</small
+      >
+      <small *ngIf="signupForm.get('password')?.hasError('minlength')"
+        >Password must be at least 8 characters</small
+      >
+      <small *ngIf="signupForm.get('password')?.hasError('maxlength')"
+        >Password cannot be more than 30 characters</small
+      >
+    </div>
+  </div>
+
+  <div>
+    <input
+      type="password"
+      formControlName="confirmPassword"
+      placeholder="Confirm Password"
+    />
+    <div
+      *ngIf="
+        signupForm.get('confirmPassword')?.touched &&
+        signupForm.get('confirmPassword')?.invalid
+      "
+    >
+      <small *ngIf="signupForm.get('confirmPassword')?.hasError('required')"
+        >Confirm Password is required</small
+      >
+      <small *ngIf="signupForm.hasError('mismatch')"
+        >Passwords must match</small
+      >
+    </div>
+  </div>
+
+  <div>
+    <input type="checkbox" formControlName="terms" /> Agree to terms and
+    conditions
+  </div>
+
+  <button
+    type="submit"
+    [disabled]="signupForm.invalid || !signupForm.get('terms')?.value"
+    (click)="onRegissterClick()"
+  >
+    Register
+  </button>
+</form>
+
+
+
+
+<form
+  [formGroup]="forgotPasswordForm"
+  *ngIf="showForgotPassword"
+  (ngSubmit)="resetPassword()"
+>
+  <div>
+    <input type="email" formControlName="email" placeholder="Email" />
+    <div
+      *ngIf="
+        forgotPasswordForm.get('email')?.touched &&
+        signupForm.get('email')?.invalid
+      "
+    >
+      <small *ngIf="forgotPasswordForm.get('email')?.hasError('required')"
+        >Email is required</small
+      >
+      <small *ngIf="forgotPasswordForm.get('email')?.hasError('email')"
+        >Enter a valid email</small
+      >
+    </div>
+  </div>
+
+  <button
+    type="submit"
+    [disabled]="forgotPasswordForm.invalid"
+    (click)="resetPass()"
+  >
+    Reset Password
+  </button>
+  <button type="button" (click)="closeForgotPasswords()">Cancel</button>
+</form>
